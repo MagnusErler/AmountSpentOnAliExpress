@@ -11,8 +11,15 @@ def Scraping():
 
     browser.get('https://www.aliexpress.com/p/order/index.html')
 
-
-    input("-----------------------   Press Enter to continue...   -----------------------")
+    print("")
+    print("------------------------------------------------------------------------------------")
+    print("-----------------------   Login to AliExpress                -----------------------")
+    print("-----------------------   Close additional tabs if opened    -----------------------")
+    print("-----------------------   Accept/decline cookies if needed   -----------------------")
+    print("-----------------------   Press Enter to continue...         -----------------------")
+    print("------------------------------------------------------------------------------------")
+    print("")
+    input("")
     
     btn_DeletedOrders = browser.find_element_by_xpath('//*[@id="root"]/div/div[2]/div[1]/div[2]')
     btn_DeletedOrders.click()
