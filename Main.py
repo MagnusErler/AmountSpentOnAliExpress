@@ -7,13 +7,15 @@ import time
 options = webdriver.ChromeOptions() 
 
 try:
-    #browser = webdriver.Chrome(options=options,executable_path=r'C:/Users/---PATH_TO_FILE---/chromedriver.exe')
-    browser = webdriver.Chrome("/home/magnus/Repo/AmountSpentOnAliExpress/chromedriver_100")
+    browser = webdriver.Chrome("C:/Users/---PATH_TO_FILE---/chromedriver.exe")
 except:
     try:
-        browser = webdriver.Chrome("/home/magnus/Repo/AmountSpentOnAliExpress/chromedriver_99")
+        browser = webdriver.Chrome("/home/---PATH_TO_FILE---/chromedriver_100")
     except:
-        browser = webdriver.Chrome("/home/magnus/Repo/AmountSpentOnAliExpress/chromedriver_98")
+        try:
+            browser = webdriver.Chrome("/home/---PATH_TO_FILE---/chromedriver_99")
+        except:
+            browser = webdriver.Chrome("/home/---PATH_TO_FILE---/chromedriver_98")
 
 
 browser.get('https://www.aliexpress.com/p/order/index.html')
