@@ -1,21 +1,21 @@
 #!/usr/bin/env python
 
 from selenium import webdriver
+import pathlib
 import time
 
-#Opening the webpage
 options = webdriver.ChromeOptions() 
 
 try:
-    browser = webdriver.Chrome("C:/Users/---PATH_TO_FILE---/chromedriver.exe")
+    browser = webdriver.Chrome(executable_path=str(pathlib.Path().resolve()) + "\chromedriver.exe")
 except:
     try:
-        browser = webdriver.Chrome("/home/---PATH_TO_FILE---/chromedriver_100")
+        browser = webdriver.Chrome(executable_path=str(pathlib.Path().resolve()) + "\chromedriver_100")
     except:
         try:
-            browser = webdriver.Chrome("/home/---PATH_TO_FILE---/chromedriver_99")
+            browser = webdriver.Chrome(executable_path=str(pathlib.Path().resolve()) + "\chromedriver_99")
         except:
-            browser = webdriver.Chrome("/home/---PATH_TO_FILE---/chromedriver_98")
+            browser = webdriver.Chrome(executable_path=str(pathlib.Path().resolve()) + "\chromedriver_98")
 
 
 browser.get('https://www.aliexpress.com/p/order/index.html')
