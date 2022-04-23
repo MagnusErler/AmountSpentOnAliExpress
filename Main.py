@@ -1,22 +1,12 @@
 #!/usr/bin/env python
 
 from selenium import webdriver
-import pathlib
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.common.by import By
 import time
 
-options = webdriver.ChromeOptions() 
-
-try:
-    browser = webdriver.Chrome(executable_path=str(pathlib.Path().resolve()) + "\chromedriver.exe")
-except:
-    try:
-        browser = webdriver.Chrome(executable_path=str(pathlib.Path().resolve()) + "\chromedriver_100")
-    except:
-        try:
-            browser = webdriver.Chrome(executable_path=str(pathlib.Path().resolve()) + "\chromedriver_99")
-        except:
-            browser = webdriver.Chrome(executable_path=str(pathlib.Path().resolve()) + "\chromedriver_98")
-
+browser = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 
 browser.get('https://www.aliexpress.com/p/order/index.html')
 
@@ -25,56 +15,60 @@ print("-------------------------------------------------------------------------
 print("-----------------------   Login to AliExpress                -----------------------")
 print("-----------------------   Close additional tabs if opened    -----------------------")
 print("-----------------------   Accept/decline cookies if needed   -----------------------")
-print("-----------------------   Press Enter to continue...         -----------------------")
+print("-----------------------   Press Enter here to continue...    -----------------------")
 print("------------------------------------------------------------------------------------")
-raw_input("")
+input("")
 
-btn_DeletedOrders = browser.find_element_by_xpath('//*[@id="root"]/div/div[2]/div[1]/div[2]')
+#Going to 'deleted orders'
+btn_DeletedOrders = browser.find_element(by=By.XPATH, value='//*[@id="root"]/div/div[1]/div[1]/div[2]')
 btn_DeletedOrders.click()
+
 time.sleep(1)
 
-while(True):
+#Open-up all deleted orders
+attempts = 0
+while attempts < 10:
     try:
-        #Finding target
-        btn_ViewMoreOrders = browser.find_element_by_xpath('//*[@id="root"]/div/div[3]/div[3]/button/span')
-        #Scrolling to target
+        #Finding 'view more orders' button
+        btn_ViewMoreOrders = browser.find_element(by=By.XPATH, value='//*[@id="root"]/div/div[2]/div[3]/button')
+        #Scrolling to 'view more orders' button
         browser.execute_script("return arguments[0].scrollIntoView(true);", btn_ViewMoreOrders)
-        time.sleep(2)
 
         btn_ViewMoreOrders.click()
-        time.sleep(2)
 
+        attempts = 0
     except:
-        break
+        time.sleep(0.5)
+        attempts += 1
 
+#Calculate amount spent
 i = 1
 amount_spent = 0
-
-while(True):
+attempts = 0
+while attempts < 10:
     try:
-        #Finding target
-        text_price = browser.find_element_by_xpath('//*[@id="root"]/div/div[3]/div[2]/div/div[' + str(i) + ']/div[3]/div[2]/div[1]/span')
-        #Scrolling to target
+        #Finding 'price of single item'
+        text_price = browser.find_element(by=By.XPATH, value='//*[@id="root"]/div/div[2]/div[2]/div/div[' + str(i) + ']/div[3]/div[2]/div[1]/span')
+        #Scrolling to 'price of single item'
         browser.execute_script("return arguments[0].scrollIntoView(true);", text_price)
 
-        #Reading target
-        text_price_string = browser.find_element_by_xpath('//*[@id="root"]/div/div[3]/div[2]/div/div[' + str(i) + ']/div[3]/div[2]/div[1]/span').text
+        #Reading 'price of single item'
+        text_price_string = text_price.text
         text_price_string = text_price_string.replace("Total: US $", "")
         text_price_float = float(text_price_string)
 
         amount_spent = amount_spent + text_price_float
 
-        print("text_price_float: " + str(text_price_float))
-        print("amount_spent: " + str(amount_spent))
+        print("Price of item: $ " + str("%0.2f" % text_price_float))
+        print("Current total amount spent on AliExpress: $ " + str("%0.2f" % amount_spent))
 
         i = i + 1
+
+        attempts = 0
     except:
-        break
+        time.sleep(0.5)
+        attempts += 1
+print("---------------------------------------------------")
+print("Total amount spent on AliExpress: $ " + str("%0.2f" % amount_spent))
 
-print("amount_spent: " + str(amount_spent))
-
-time.sleep(1)
-
-
-#Closing browser
 browser.close()
