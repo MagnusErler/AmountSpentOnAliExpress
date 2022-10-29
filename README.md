@@ -6,7 +6,12 @@ The script calculates the price from every item under 'Deleted orders'
 
 ## Usage
 
-- Run the script
+```
+pip install selenium
+pip install webdriver_manager
+```
+
+- Run the script ```python3 Main.py```
 - Wait for google chrome to load the homepage
 - Login to your AliExpress account
 - Close any additional tabs (if opened)
