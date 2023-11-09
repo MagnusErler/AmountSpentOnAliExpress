@@ -10,4 +10,4 @@ The script calculates the price from every item given an HTML file
 - Scroll down and click "View orders" until all previous orders are visible
 - Save the side (right-click and save, or ctrl-s) under "orders.html"
 - Run AmountSpendOnAliExpress.py
-- The amount spent on AliExpress is then displayed in the terminal
+- The amount spent on AliExpress is then displayed in the terminal and saved in orders.csv
