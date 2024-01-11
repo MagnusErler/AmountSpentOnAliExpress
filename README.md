@@ -1,8 +1,8 @@
 # AmountSpentOnAliExpress
 
-Python-script used to calculate amount spent on AliExpress inside the Delete orders-section
+Python script used to calculate the amount spent on AliExpress
 
-The script calculates the price from every item given a HTML-file
+The script calculates the price from every item given an HTML file
 
 ## Setup
 
@@ -10,7 +10,7 @@ Run `pip install -r requirements.txt`
 
 ## Usage
 
-- Go to your **Delete orders**-section
+- Login into AliExpress -> My Orders -> Deleted orders
 - Scroll down and click on **View orders** until all orders are shown
 - Right-click anywhere on the page and choose **save as...**
 - Save the file as orders.html
