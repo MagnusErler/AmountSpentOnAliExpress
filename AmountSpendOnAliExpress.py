@@ -78,6 +78,19 @@ for order_item in order_items:
 
     order_date = datetime.datetime.strptime(order_date, '%b %d, %Y')
     order_dates.append(order_date)
+    
+def get_difference(date1, date2):
+    delta = date2 - date1
+    return delta.days
 
-plt.hist(order_dates, bins=20)
+# Calcualting the amount of weeks betwen 4th of february 2016 and today
+date1 = datetime.datetime(2016, 2, 4)
+date2 = datetime.datetime.now()
+weeks = get_difference(date1, date2) / 7
+months = get_difference(date1, date2) / 30
+
+plt.hist(order_dates, bins=int(months))
+plt.xlabel('Ordering month')
+plt.ylabel('Number of orders')
+plt.title('Amount of orders per month')
 plt.show()
