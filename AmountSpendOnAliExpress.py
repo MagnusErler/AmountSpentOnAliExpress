@@ -13,6 +13,8 @@ order_items = soup.find_all(class_='order-item')
 
 total_sum = 0
 
+list_of_orderID = []
+
 with open('orders.csv', 'w', newline='', encoding='utf-8') as file:
     writer = csv.writer(file, delimiter=';')
     writer.writerow(["Name", "Price", "Order Date"])
@@ -36,14 +38,31 @@ with open('orders.csv', 'w', newline='', encoding='utf-8') as file:
         # ORDER DATE
         order_date_element = order_item.find(class_='order-item-header-right-info')
         if order_date_element:
-            order_date = order_date_element.text.strip()
+            order_date_id = order_date_element.text.strip()
         else:
-            order_date = "N/A"
+            order_date_id = "N/A"
 
         # Remove "Order date: " from order_date
-        order_date = order_date.replace('Order date: ', '')
+        order_date_id = order_date_id.replace('Order date: ', '')
+
         # Remove everything after "Order ID: "
-        order_date = order_date.split('Order ID:')[0]
+        order_date = order_date_id.split('Order ID:')[0]
+
+        # Remove the word "copy" from the order date
+        order_id = order_date_id.replace('Copy', '')
+
+        print(order_id)
+
+        index = order_id.find("Order ID: ")
+
+        if index != -1:
+            # Extract the substring starting from the position after "Order ID: "
+            order_id = order_id[index + len("Order ID: "):]
+            print(order_id)
+        else:
+            print("No 'Order ID:' found in the input string.")
+        
+        list_of_orderID.append(order_id)
 
         # WRITE TO CSV-FILE
         writer.writerow([item_name, float(price), order_date])
